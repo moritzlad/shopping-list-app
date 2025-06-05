@@ -5,7 +5,7 @@ export default function Item({ label, emoji}) {
 
     return (
       <li onClick={() => setChecked(!checked)}
-      className={`p-2 border rounded select-none ${checked ? "line-through text-gray-400": ""}`}>
+      className={`p-2  rounded select-none ${checked ? "line-through text-gray-400": ""}`}>
         {emoji} {label}
       </li>
     )
