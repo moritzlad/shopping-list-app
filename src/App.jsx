@@ -1,28 +1,37 @@
 import Header from "./components/Header"
 import ItemForm from "./components/ItemForm"
 import AddCategoryModal from "./components/AddCategoryModal"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Category from "./components/Category"
+import { categoriesTable, itemsTable } from "./db/db"
 
 function App() {
-  const [items, setItems] = useState([
-    { label: 'Emmental', category: 'Dairy' },
-    { label: 'Croissants', category: 'Bakery' }
-  ])
+  const [items, setItems] = useState([])
 
-  const [categories, setCategories] = useState([
-      {name: "Dairy", emoji: "🧀" },
-      { name: "Bakery", emoji: "🥖" }
-  ])
+  const [categories, setCategories] = useState([])
 
   const [showAddCategory, setShowAddCategory] = useState(false)
 
-  function addItem(item){
-    setItems([...items, item])
+  useEffect(() => {
+    async function loadData(){
+      const categoriesFromDB = await categoriesTable.toArray()
+      const itemsFromDB = await itemsTable.toArray()
+
+      setCategories(categoriesFromDB)
+      setItems(itemsFromDB)
+    }
+
+    loadData()
+  }, [])
+
+  async function addItem(item){
+    const id = await itemsTable.add(item)
+    setItems([...items, {...item, id}])
   }
 
-  function addCategory(category){
-    setCategories([...categories, category])
+  async function addCategory(category){
+    const id = await categoriesTable.add(category)
+    setCategories([...categories, {...category, id}])
     setShowAddCategory(false)
   }
 
@@ -38,7 +47,7 @@ function App() {
             key = {cat.name}
             name = {cat.name}
             emoji = {cat.emoji}
-            items={items.filter(item => item.category == cat.name)}
+            items={items.filter(item => item.categoryId == cat.id)}
           />
         ))}
       <div onClick={() => setShowAddCategory(true)}
