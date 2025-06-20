@@ -37,7 +37,7 @@ function App() {
 
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full">
       <div className="fixed top-0 left-0 right-0 z-10 text-center py-4 bg-white shadow-sm">
         <Header />
       </div>
@@ -50,24 +50,21 @@ function App() {
             items={items.filter(item => item.categoryId == cat.id)}
           />
         ))}
-      <div onClick={() => setShowAddCategory(true)}
-        className={"p-2 border rounded px-4 text-center"}>
-        + ADD CATEGORY
+        <div onClick={() => setShowAddCategory(true)}
+          className={"p-2 border rounded px-4 text-center"}>
+          + ADD CATEGORY
+        </div>
+        <AddCategoryModal
+          isOpen={showAddCategory}
+          onClose={() => setShowAddCategory(false)}
+          onAddCategory={addCategory}
+        />
       </div>
-      <AddCategoryModal
-        isOpen={showAddCategory}
-        onClose={() => setShowAddCategory(false)}
-        onAddCategory={addCategory}
-      />
-      </div>
-
-      <div className="fixed bottom-0 left-0 right-0 z-10 p-4 bg-white shadow-lg border-t">
-        <div className="max-w-md mx-auto">
+      <div className="fixed bottom-0 left-0 right-0 z-10 shadow-lg">
           <ItemForm 
             onAddItem={addItem}
             categories={categories}
           />
-        </div>
       </div>
     </div>
   )

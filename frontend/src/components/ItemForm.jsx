@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import {ArrowUpIcon} from "@heroicons/react/24/solid"
 export default function ItemForm({ onAddItem, categories }) {
   const [text, setText] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -48,42 +48,32 @@ export default function ItemForm({ onAddItem, categories }) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6 max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex items-start gap-3">
-          <div className="flex-1">
-            <textarea
-              value={text}
-              onChange={e => setText(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none overflow-hidden min-h-[48px]"
-              placeholder="What do you want to add?"
-              rows="1"
-              disabled={isLoading}
-              onInput={(e) => {
-                e.target.style.height = 'auto'
-                e.target.style.height = e.target.scrollHeight + 'px'
-              }}
-            />
-          </div>
-          
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-12 h-12 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-full flex items-center justify-center text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex-shrink-0"
-          >
-            {isLoading ? (
-              <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="w-full bg-white rounded-t-3xl shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex items-center relative p-3">
+    <textarea
+      value={text}
+      onChange={e => setText(e.target.value)}
+      className="flex-1 px-6 py-2 bg-transparent border-none outline-none text-gray-700 placeholder-gray-400 "
+      placeholder="Add items to list..."
+      disabled={isLoading}
+      rows={1}
+        style={{
+          height: 'auto',
+          minHeight: '40px'
+        }}
+        onInput={(e) => {
+          // Auto-resize textarea
+          e.target.style.height = 'auto'
+          e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px'
+        }}
+    />
+    
+    <button
+      type="submit"
+      disabled={isLoading || text.trim() === ""}
+      className="absolute bottom-5 right-5 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center"
+    >
+      <ArrowUpIcon className="w-5 h-5 text-white" />
+    </button>
+  </form>
   )
 }
