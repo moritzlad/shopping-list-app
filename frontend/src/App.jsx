@@ -41,7 +41,7 @@ function App() {
       <div className="fixed top-0 left-0 right-0 z-10 text-center py-4 bg-white shadow-sm">
         <Header />
       </div>
-      <div className="w-screen pt-32 pb-20 px-4 mb-44">
+      <div className="w-screen pt-20 pb-20 px-4 mb-44">
         {categories.map(cat => (
           <Category
             key = {cat.name}

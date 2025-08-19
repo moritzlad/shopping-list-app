@@ -53,7 +53,7 @@ export default function ItemForm({ onAddItem, categories }) {
       value={text}
       onChange={e => setText(e.target.value)}
       className="flex-1 px-6 py-2 bg-transparent border-none outline-none text-gray-700 placeholder-gray-400 "
-      placeholder="Add items to list..."
+      placeholder="Add items, recipes, ..."
       disabled={isLoading}
       rows={1}
         style={{
