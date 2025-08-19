@@ -1,12 +1,13 @@
 import {useState} from "react"
-import EmojiPicker from 'emoji-picker-react'
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react'
+import type { AddCategoryModalProps } from '../types'
 
-export default function AddCategoryModal({ isOpen, onClose, onAddCategory}){
+export default function AddCategoryModal({ isOpen, onClose, onAddCategory}: AddCategoryModalProps){
     const [categoryName, setCategoryName] = useState('')
     const [emoji, setEmoji] = useState('') 
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
-    const handleEmojiClick = (emojiObject) => {
+    const handleEmojiClick = (emojiObject: EmojiClickData) => {
         setEmoji(emojiObject.emoji)
         setShowEmojiPicker(false)
     }

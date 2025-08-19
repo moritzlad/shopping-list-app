@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import {ArrowUpIcon} from "@heroicons/react/24/solid"
-export default function ItemForm({ onAddItem, categories }) {
+import type { ItemFormProps, ApiResponse } from '../types'
+
+export default function ItemForm({ onAddItem, categories }: ItemFormProps) {
   const [text, setText] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (text.trim() === "") return
     setIsLoading(true)
@@ -21,7 +23,7 @@ export default function ItemForm({ onAddItem, categories }) {
       })
 
       if (response.ok) {
-        const result = await response.json()
+        const result: ApiResponse = await response.json()
         console.log("API Response:", result)
         console.log("Number of items:", result.items?.length)
 
@@ -62,8 +64,9 @@ export default function ItemForm({ onAddItem, categories }) {
         }}
         onInput={(e) => {
           // Auto-resize textarea
-          e.target.style.height = 'auto'
-          e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px'
+          const target = e.target as HTMLTextAreaElement;
+          target.style.height = 'auto'
+          target.style.height = Math.min(target.scrollHeight, 200) + 'px'
         }}
     />
     

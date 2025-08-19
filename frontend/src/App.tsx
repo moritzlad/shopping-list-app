@@ -4,12 +4,11 @@ import AddCategoryModal from "./components/AddCategoryModal"
 import { useState, useEffect } from "react"
 import Category from "./components/Category"
 import { categoriesTable, itemsTable } from "./db/db"
+import type { Category as CategoryType, Item } from "./types"
 
 function App() {
-  const [items, setItems] = useState([])
-
-  const [categories, setCategories] = useState([])
-
+  const [items, setItems] = useState<Item[]>([])
+  const [categories, setCategories] = useState<CategoryType[]>([])
   const [showAddCategory, setShowAddCategory] = useState(false)
 
   useEffect(() => {
@@ -24,17 +23,16 @@ function App() {
     loadData()
   }, [])
 
-  async function addItem(item){
+  async function addItem(item: Item){
     const id = await itemsTable.add(item)
     setItems(prevItems => [...prevItems, {...item, id}])
   }
 
-  async function addCategory(category){
+  async function addCategory(category: CategoryType){
     const id = await categoriesTable.add(category)
     setCategories([...categories, {...category, id}])
     setShowAddCategory(false)
   }
-
 
   return (
     <div className="min-h-screen w-full">

@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import type { ItemProps } from '../types'
 
-export default function Item({ label, emoji}) {
+export default function Item({ label, emoji }: ItemProps) {
     const [checked, setChecked] = useState(false)
 
     return (
